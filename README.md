@@ -1,16 +1,20 @@
 # TodoListReact
-This todo list created with React
 
+This todo list created with React
 
 Рекомендуемые версии node > **18.19.0**
 
-## Установка 
+## Установка
 
 npm install
 
-## Запуск 
+## Запуск
 
 npm run start
+
+## Запуск тестов
+
+npm run test
 
 ## Используемые технологии
 
@@ -18,11 +22,3 @@ npm run start
 - HTML
 - CSS
 - Typescript
-
-
-
-
-
-
-
-
