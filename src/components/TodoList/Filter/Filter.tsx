@@ -12,6 +12,8 @@ export const Filter: React.FC<{
       <button onClick={() => setFilter('completed')}>Completed</button>
       <button onClick={() => setFilter('active')}>Active</button>
     </div>
-    <button onClick={clearCompleted}>Clear Completed</button>
+    <button className="clearCompletedButton" onClick={clearCompleted}>
+      Clear
+    </button>
   </div>
 );

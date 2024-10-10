@@ -8,6 +8,8 @@
 .centerBtn {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 }
 
 .items {
@@ -17,4 +19,10 @@
 
 .centerBtn button {
   margin: 0 5px;
+  white-space: nowrap;
+}
+
+/* Размещаем кнопку "Clear Completed" по правому краю */
+.clearCompletedButton {
+  margin-left: auto;
 }
