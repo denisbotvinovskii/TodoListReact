@@ -20,6 +20,12 @@
   transition: border-color 0.3s ease;
 }
 
+.inputOverlay {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
 .input:focus {
   border-color: #4caf50;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
@@ -54,18 +60,15 @@
 .todo {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .arrow {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  background-image: url('arrow-right.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  transition: transform 0.3s ease;
-}
-
-.arrow.expanded {
-  transform: rotate(90deg);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 24px;
+  padding-top: 2px;
+  position: absolute;
+  right: 15px;
 }

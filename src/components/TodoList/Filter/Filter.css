@@ -1,0 +1,20 @@
+.filter {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.centerBtn {
+  display: flex;
+  align-items: center;
+}
+
+.items {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.centerBtn button {
+  margin: 0 5px;
+}

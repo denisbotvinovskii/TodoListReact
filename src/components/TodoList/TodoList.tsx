@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { TodoT } from './types';
-import { Todo } from './Todo';
+import { Todo } from './Todo/Todo';
+import { Arrow } from './Arrow/Arrow';
+import { Filter } from './Filter/Filter';
 import './TodoList.css';
 
 export const TodoList: React.FC = () => {
   const [todos, setTodos] = useState<TodoT[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [isListExpanded, setIsListExpanded] = useState<boolean>(true);
+  const [filter, setFilter] = useState<string>('all');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -19,44 +22,72 @@ export const TodoList: React.FC = () => {
   };
 
   const addTodoHandler = () => {
-    setTodos([...todos, { id: todos.length + 1, title: inputValue }]);
+    setTodos([
+      ...todos,
+      { id: todos.length + 1, title: inputValue, checked: false },
+    ]);
     setInputValue('');
   };
 
-  const removeTodoHandler = (id: number) => {
-    const newTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(newTodos);
+  const handleToggleChecked = (index: number) => {
+    setTodos((prevItems) => {
+      const newItems = [...prevItems];
+      newItems[index] = {
+        ...newItems[index],
+        checked: !newItems[index].checked,
+      };
+      return newItems;
+    });
   };
 
-  const toggleTodoList = () => {
-    setIsListExpanded((prev) => !prev);
+  const clearCompleted = () => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => !todo.checked));
   };
+
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === 'completed') return todo.checked;
+    if (filter === 'active') return !todo.checked;
+    return true; // all
+  });
+
+  const activeTodos = todos.filter((todo) => !todo.checked);
+
+  console.log(filteredTodos.length);
 
   return (
     <div className="todoList">
-      <div className={`todoListHeader ${isListExpanded ? 'expanded' : ''}`}>
-        <div className="arrow" onClick={toggleTodoList} />
+      <div className="inputOverlay">
+        <Arrow
+          isListExpanded={isListExpanded}
+          onToggle={() => setIsListExpanded((prev) => !prev)}
+        />
         <input
           className="input"
           type="text"
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="What need to be done?"
+          placeholder="What needs to be done?"
         />
       </div>
       {isListExpanded && (
         <div className="todoItems">
-          {todos.map((todo) => (
+          {filteredTodos.map((todo, index) => (
             <div
-              className="todoOverlay"
               key={todo.id}
-              onClick={() => removeTodoHandler(todo.id)}
+              className="todoOverlay"
+              onClick={() => handleToggleChecked(index)}
             >
-              <Todo id={todo.id} title={todo.title} />
+              <Todo id={todo.id} title={todo.title} checked={todo.checked} />
             </div>
           ))}
-          <div className="todoOverlay">Filter</div>
+          {todos.length ? (
+            <Filter
+              count={activeTodos.length}
+              setFilter={setFilter}
+              clearCompleted={clearCompleted}
+            />
+          ) : null}
         </div>
       )}
     </div>
