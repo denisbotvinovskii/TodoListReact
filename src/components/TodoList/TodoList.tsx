@@ -10,6 +10,7 @@ export const TodoList: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isListExpanded, setIsListExpanded] = useState<boolean>(true);
   const [filter, setFilter] = useState<string>('all');
+  const activeTodos = todos.filter((todo) => !todo.checked);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -49,10 +50,6 @@ export const TodoList: React.FC = () => {
     if (filter === 'active') return !todo.checked;
     return true; // all
   });
-
-  const activeTodos = todos.filter((todo) => !todo.checked);
-
-  console.log(filteredTodos.length);
 
   return (
     <div className="todoList">
