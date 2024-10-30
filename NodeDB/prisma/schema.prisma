@@ -10,6 +10,7 @@ datasource db {
 model Todo {
   id String @id @default(cuid())
   text String 
+  checked Boolean @default(false)
   createdAt DateTime @default(now())
   updatedTime DateTime @updatedAt()
 }

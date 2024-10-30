@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { TodoT } from './types';
+import { ITodo } from './types';
 import { Todo } from './Todo/Todo';
 import { Arrow } from './Arrow/Arrow';
 import { Filter } from './Filter/Filter';
 import './TodoList.css';
 
 export const TodoList: React.FC = () => {
-  const [todos, setTodos] = useState<TodoT[]>([]);
+  const [todos, setTodos] = useState<ITodo[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [isListExpanded, setIsListExpanded] = useState<boolean>(true);
   const [filter, setFilter] = useState<string>('all');
@@ -25,7 +25,7 @@ export const TodoList: React.FC = () => {
   const addTodoHandler = () => {
     setTodos([
       ...todos,
-      { id: todos.length + 1, title: inputValue, checked: false },
+      { id: todos.length + 1, text: inputValue, checked: false },
     ]);
     setInputValue('');
   };
@@ -75,7 +75,7 @@ export const TodoList: React.FC = () => {
               className="todoOverlay"
               onClick={() => handleToggleChecked(index)}
             >
-              <Todo id={todo.id} title={todo.title} checked={todo.checked} />
+              <Todo id={todo.id} text={todo.text} checked={todo.checked} />
             </div>
           ))}
           {todos.length ? (

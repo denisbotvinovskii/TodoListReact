@@ -1,5 +1,7 @@
-export type TodoT = {
+export interface ITodo {
   id: number;
-  title: string;
+  text: string;
   checked: boolean;
-};
+  createdAt?: Date;
+  updatedTime?: Date;
+}

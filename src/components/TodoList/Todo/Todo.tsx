@@ -1,12 +1,12 @@
 import React from 'react';
 import { CheckCircle } from '../Circle/Circle';
-import { TodoT } from '../types';
+import { ITodo } from '../types';
 
-export const Todo: React.FC<TodoT> = ({ title, checked }) => {
+export const Todo: React.FC<ITodo> = ({ text, checked }) => {
   return (
     <div className="todo">
       <CheckCircle checked={checked} />
-      {title}
+      {text}
     </div>
   );
 };

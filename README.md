@@ -1,12 +1,20 @@
 # TodoListReact
 
-This todo list created with React
+Этот TodoList разработан с использованием React
 
 Рекомендуемые версии node > **18.19.0**
 
 ## Установка
 
 npm install
+
+## Запуск БД
+
+1. Перейдите в папку NodeDB
+2. Запустите сервер при помощи команды
+   npm run dev
+
+По умолчанию сервер будет запущен на порту 3000
 
 ## Запуск
 
@@ -18,7 +26,16 @@ npm run test
 
 ## Используемые технологии
 
+Frontend
+
 - React
 - HTML
 - CSS
 - Typescript
+
+Backend
+
+- Node
+- Express
+- PostgreSQL
+- Prisma ORM
