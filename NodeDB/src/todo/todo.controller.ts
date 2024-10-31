@@ -26,4 +26,41 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+router.delete('/', async (req: Request, res: Response) => {
+  try {
+    const todosToDelete = (await todoService.getTodo()).filter(
+      (todo) => todo.checked
+    );
+    const deletedTodos = await todoService.deleteTodos(todosToDelete);
+    res.status(200).json(deletedTodos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Ошибка при удалении задач');
+  }
+});
+
+router.patch('/', async (req: Request, res: Response) => {
+  const { id, checked } = req.body;
+
+  const todoToUpdate = (await todoService.getTodo()).find(
+    (todo) => todo.id === id
+  );
+
+  if (!todoToUpdate) {
+    return;
+  }
+
+  try {
+    const patchedTodo = await todoService.patchTodo({
+      ...todoToUpdate,
+      checked: checked !== undefined ? checked : todoToUpdate.checked,
+    });
+
+    res.status(200).json(patchedTodo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Ошибка при обновлении задачи');
+  }
+});
+
 export const todoRouter = router;

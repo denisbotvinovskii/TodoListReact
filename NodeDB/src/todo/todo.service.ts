@@ -11,4 +11,21 @@ export class TodoService {
   getTodo(): Promise<Todo[]> {
     return this.prisma.todo.findMany();
   }
+
+  deleteTodos(todos: ITodo[]) {
+    const ids = todos.map((todo) => ({ checked: todo.checked }));
+    return this.prisma.todo.deleteMany({
+      where: {
+        OR: ids,
+      },
+    });
+  }
+  patchTodo(updatedData: ITodo) {
+    return this.prisma.todo.update({
+      where: { id: updatedData.id },
+      data: {
+        checked: updatedData.checked,
+      },
+    });
+  }
 }

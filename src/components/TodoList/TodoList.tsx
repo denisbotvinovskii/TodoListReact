@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { ITodo } from './types';
 import { Todo } from './Todo/Todo';
 import { Arrow } from './Arrow/Arrow';
 import { Filter } from './Filter/Filter';
+import { useTodos } from '../../Api';
 import './TodoList.css';
 
 export const TodoList: React.FC = () => {
-  const [todos, setTodos] = useState<ITodo[]>([]);
+  const { todos = [], isLoading, addTodo, deleteTodos, patchTodo } = useTodos();
   const [inputValue, setInputValue] = useState<string>('');
   const [isListExpanded, setIsListExpanded] = useState<boolean>(true);
   const [filter, setFilter] = useState<string>('all');
@@ -16,33 +16,27 @@ export const TodoList: React.FC = () => {
     setInputValue(e.target.value);
   };
 
+  const addTodoHandler = () => {
+    addTodo(inputValue);
+    setInputValue('');
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim()) {
       addTodoHandler();
     }
   };
 
-  const addTodoHandler = () => {
-    setTodos([
-      ...todos,
-      { id: todos.length + 1, text: inputValue, checked: false },
-    ]);
-    setInputValue('');
-  };
-
   const handleToggleChecked = (index: number) => {
-    setTodos((prevItems) => {
-      const newItems = [...prevItems];
-      newItems[index] = {
-        ...newItems[index],
-        checked: !newItems[index].checked,
-      };
-      return newItems;
-    });
+    const todoToUpdate = todos.find(
+      (todo) => todo.id === filteredTodos[index].id
+    );
+    if (!todoToUpdate) return;
+    patchTodo(todoToUpdate);
   };
 
-  const clearCompleted = () => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => !todo.checked));
+  const handleClearCompleted = () => {
+    deleteTodos();
   };
 
   const filteredTodos = todos.filter((todo) => {
@@ -50,6 +44,8 @@ export const TodoList: React.FC = () => {
     if (filter === 'active') return !todo.checked;
     return true; // all
   });
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="todoList">
@@ -82,7 +78,7 @@ export const TodoList: React.FC = () => {
             <Filter
               count={activeTodos.length}
               setFilter={setFilter}
-              clearCompleted={clearCompleted}
+              clearCompleted={handleClearCompleted}
             />
           ) : null}
         </div>

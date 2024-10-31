@@ -1,7 +1,7 @@
 export interface ITodo {
-  id: number;
+  id?: string;
   text: string;
-  checked: boolean;
+  checked?: boolean;
   createdAt?: Date;
   updatedTime?: Date;
 }
