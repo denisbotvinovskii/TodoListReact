@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import helmet from 'helmet';
 import compression from 'compression';
-import cors from 'cors';
+import { corsMiddleware } from './cors.middleware';
 
 dotenv.config();
 const app = express();
@@ -16,7 +16,7 @@ async function main() {
   app.use(helmet());
   app.use(compression());
   app.use(express.json());
-  app.use(cors());
+  app.use(corsMiddleware);
 
   app.use('/api/todos', todoRouter);
 
